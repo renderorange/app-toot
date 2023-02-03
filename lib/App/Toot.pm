@@ -10,14 +10,19 @@ our $VERSION = '0.01';
 
 sub new {
     my $class = shift;
-    my $opt   = shift;
+    my $arg   = shift;
 
-    if ( !defined $opt->{'config'} ) {
-        die 'option config is required';
+    if ( !defined $arg->{'config'} ) {
+        die 'config is required';
+    }
+
+    if ( !defined $arg->{'status'} ) {
+        die 'status is required';
     }
 
     my $self = {
-        config => App::Toot::Config::load( $opt->{'config'} ),
+        config => App::Toot::Config::load( $arg->{'config'} ),
+        status => $arg->{'status'},
     };
 
     $self->{'client'} = Mastodon::Client->new(
@@ -33,14 +38,9 @@ sub new {
 }
 
 sub run {
-    my $self   = shift;
-    my $status = shift;
+    my $self = shift;
 
-    if ( !defined $status ) {
-        die 'status is required';
-    }
-
-    return $self->{'client'}->post_status( $status );
+    return $self->{'client'}->post_status( $self->{'status'} );
 }
 
 1;
@@ -56,91 +56,62 @@ App::Toot - post a status to Mastodon
 =head1 SYNOPSIS
 
  use App::Toot;
- my $app = App::Toot->new( \%opt );
- my $ret = $app->run( $status );
-
- # the commandline tool
- toot [--config <name>] [--status <status to post>] [--help]
+ my $app = App::Toot->new({ config => 'default', status => 'toot all day' });
+ my $ret = $app->run();
 
 =head1 DESCRIPTION
 
 C<App::Toot> is a program to post statues to Mastodon.
 
-For the commandline tool, please see the documentation for L<toot>.
+For the commandline tool, see the documentation for L<toot> or C<man toot>.
+
+=head1 METHODS
+
+=head2 new
+
+Class constructor for the C<App::Toot> object.
+
+Loads and sets the C<config> and C<status> keys into the object.
+
+=head3 ARGUMENTS
+
+The arguments for the C<new> method must be passed as a hashref containing the following keys:
+
+=over
+
+=item config
+
+String value of the config section to load.
+
+Required.
+
+=item status
+
+String value of the status to post.
+
+Required.
+
+=back
+
+=head3 RETURNS
+
+Returns an C<App::Toot> object.
+
+=head2 run
+
+Posts the status to Mastodon.
+
+=head3 ARGUMENTS
+
+None.
+
+=head3 RETURNS
+
+Returns a L<Mastodon::Entity::Status> object.
 
 =head1 CONFIGURATION
 
-To post to Mastodon, you need to provide the account's oauth in the file C<config.ini>.
-
-An example is provided as part of this distribution.  The user running the C<toot> script, for example through cron, will need access to the configuration file.
-
-To set up the configuration file, copy C<config.ini.example> into one of the following locations:
-
-=over
-
-=item C<$ENV{HOME}/.config/toot/config.ini>
-
-=item C</etc/toot/config.ini>
-
-=back
-
-After creating the file, edit and update the values in the C<default> accordingly.
-
- [default]
- instance = mastodon.social
- username = youruser
- client_id = OKE98_kdno_NOTAREALCLIENTID
- client_secret = mkjklnv_NOTAREALCLIENTSECRET
- access_token = jo83_NOTAREALACCESSTOKEN
-
-B<NOTE:> If the C<$ENV{HOME}/.config/toot/> directory exists, C<config.ini> will be loaded from there regardless of a config file in C</etc/toot/>.
-
-=head2 Required keys
-
-The following keys are required for each section:
-
-=over
-
-=item instance
-
-The Mastodon server name the account belongs to.
-
-=item username
-
-The account name for the Mastodon server defined in C<instance>.
-
-=item client_id
-
-The C<client_id> as provided for the C<username> on the C<instance>.
-
-=item client_secret
-
-The C<client_secret> as provided for the C<username> on the C<instance>.
-
-=item access_token
-
-The C<access_token> as provided for the C<username> on the C<instance>.
-
-=back
-
-=head2 Additional accounts
-
-Multiple accounts can be configured with different sections after the C<default> section.
-
- [default]
- instance = mastodon.social
- username = youruser
- client_id = OKE98_kdno_NOTAREALCLIENTID
- client_secret = mkjklnv_NOTAREALCLIENTSECRET
- access_token = jo83_NOTAREALACCESSTOKEN
- [development]
- instance = botsin.space
- username = youruserdeveluser
- client_id = Ijjkn_STILLNOTAREALCLIENTID
- client_secret = u7hhd_STILLNOTAREALCLIENTSECRET
- access_token = D873_SKILLNOTAREALACCESSTOKEN
-
-The section name, C<development> in the example above, can be named anything you'd like as long as it's unique.
+For configuration, see the documentation for L<App::Toot::Config> or C<perldoc App::Toot::Config>.
 
 =head1 COPYRIGHT AND LICENSE
 

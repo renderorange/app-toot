@@ -9,29 +9,37 @@ use App::Toot;
 
 our $VERSION = '0.01';
 
-my %opt = (
+my $opt = {
     config => 'default',
-);
+};
 
 Getopt::Long::GetOptions(
-    \%opt,
+    $opt,
     'config=s',
     'status=s',
     'help',
 ) or Pod::Usage::pod2usage( -exitval => 1 );
-Pod::Usage::pod2usage( -exitval => 0, -verbose => 1 ) if $opt{'help'};
 
-my $status = $opt{'status'};
-if ( !defined $opt{'status'} ) {
+if ( $opt->{'help'} ) {
+    Pod::Usage::pod2usage( -exitval => 0, -verbose => 1 );
+}
+
+if ( !defined $opt->{'status'} ) {
     foreach my $line ( <STDIN> ) {
         chomp( $line );
-        $status .= $line;
+        $opt->{'status'} .= $line;
     }
 }
 
-my $app = App::Toot->new( \%opt );
-my $ret = $app->run( $status );
-die 'post was not successful' unless $ret->id;
+if ( !defined $opt->{'status'} ) {
+    Pod::Usage::pod2usage( -msg => 'Option status is required', -exitval => 1, -verbose => 1 );
+}
+
+my $app = App::Toot->new($opt);
+my $ret = $app->run();
+if ( !$ret->id ) {
+    die 'post was not successful';
+}
 
 exit 0;
 
@@ -61,7 +69,7 @@ The section of the config to load credentials for.
 
 Optional.  Defaults to C<default>.
 
-For more details, see L<App::Toot::Config>.
+For more details, see the documentation for L<App::Toot::Config> or C<perldoc App::Toot::Config>.
 
 =item --status <status to post>
 
@@ -77,7 +85,7 @@ Print the help dialogue.
 
 =head1 EXAMPLES
 
-=head2 Post a status using an different account defined in the config
+=head2 Post a status using a different account defined in the config
 
  $ toot --config development --status 'toot all day'
 
@@ -88,7 +96,7 @@ Print the help dialogue.
 
 =head1 CONFIGURATION
 
-For configuration, please see the documentation for L<App::Toot::Config>.
+For configuration, see the documentation for L<App::Toot::Config> or C<perldoc App::Toot::Config>.
 
 =head1 COPYRIGHT AND LICENSE
 

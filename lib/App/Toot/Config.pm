@@ -87,15 +87,21 @@ C<App::Toot::Config> loads settings for L<App::Toot>.
 
 =head2 load( 'section name' )
 
-Reads and verifies the config, then returns the section passed in if defined.
+Reads, verifies, and returns the config.
+
+=head3 ARGUMENTS
 
 The defined section name is required and dies if not found in the loaded config.
 
+=head3 RETURNS
+
+Returns a hashref of the loaded config for the defined section name.
+
 =head1 CONFIGURATION
 
-To post to Mastodon, you need to provide the account's oauth in the file C<config.ini>.
+To post to Mastodon, you need to provide the account's oauth credentials in the file C<config.ini>.
 
-An example is provided as part of this distribution.  The user running the C<toot> script, for example through cron, will need access to the configuration file.
+An example is provided as part of this distribution.  The user running the L<toot> script, for example through cron, will need access to the configuration file.
 
 To set up the configuration file, copy C<config.ini.example> into one of the following locations:
 
@@ -107,7 +113,7 @@ To set up the configuration file, copy C<config.ini.example> into one of the fol
 
 =back
 
-After creating the file, edit and update the values in the C<default> accordingly.
+After creating the file, edit and update the values in the C<default> section to match the account's oauth credentials.
 
  [default]
  instance = mastodon.social
@@ -158,12 +164,12 @@ Multiple accounts can be configured with different sections after the C<default>
  access_token = jo83_NOTAREALACCESSTOKEN
  [development]
  instance = botsin.space
- username = youruserdeveluser
+ username = yourdeveluser
  client_id = Ijjkn_STILLNOTAREALCLIENTID
  client_secret = u7hhd_STILLNOTAREALCLIENTSECRET
  access_token = D873_SKILLNOTAREALACCESSTOKEN
 
-The section name, C<development> in the example above, can be named anything you'd like as long as it's unique.
+The section name, C<development> in the example above, can be named anything as long as it's unique with the other section names.
 
 =head1 COPYRIGHT AND LICENSE
 
