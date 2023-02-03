@@ -5,8 +5,8 @@ App::Toot - post a status to Mastodon
 # SYNOPSIS
 
     use App::Toot;
-    my $app = App::Toot->new( \%opt );
-    my $ret = $app->run( $status );
+    my $app = App::Toot->new({ config => 'default', status => 'toot all day' });
+    my $ret = $app->run();
 
     # the commandline tool
     toot [--config <name>] [--status <status to post>] [--help]
@@ -15,11 +15,11 @@ App::Toot - post a status to Mastodon
 
 `App::Toot` is a program to post statues to Mastodon.
 
-For the commandline tool, please see the documentation for [toot](https://metacpan.org/pod/toot).
+For the commandline tool, please see the documentation for [toot](https://metacpan.org/pod/toot) or `man toot`.
 
 # CONFIGURATION
 
-To post to Mastodon, you need to provide the account's oauth in the file `config.ini`.
+To post to Mastodon, you need to provide the account's oauth credentials in the file `config.ini`.
 
 An example is provided as part of this distribution.  The user running the `toot` script, for example through cron, will need access to the configuration file.
 
@@ -28,7 +28,7 @@ To set up the configuration file, copy `config.ini.example` into one of the foll
 - `$ENV{HOME}/.config/toot/config.ini`
 - `/etc/toot/config.ini`
 
-After creating the file, edit and update the values in the `default` accordingly.
+After creating the file, edit and update the values in the `default` section to match the account's oauth credentials.
 
     [default]
     instance = mastodon.social
@@ -80,7 +80,7 @@ Multiple accounts can be configured with different sections after the `default` 
     client_secret = u7hhd_STILLNOTAREALCLIENTSECRET
     access_token = D873_SKILLNOTAREALACCESSTOKEN
 
-The section name, `development` in the example above, can be named anything you'd like as long as it's unique.
+The section name, `development` in the example above, can be named anything as long as it's unique with the other section names.
 
 # COPYRIGHT AND LICENSE
 
