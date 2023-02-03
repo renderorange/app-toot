@@ -24,6 +24,12 @@ WriteMakefile(
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => '6.64',
     },
+    TEST_REQUIRES => {
+        'File::Find' => 0,
+        'File::Spec' => 0,
+        'FindBin' => 0,
+        'Test::More' => '0.98',  # for subtest()
+    },
     PREREQ_PM => {
         'Config::Tiny' => 0,
         'Getopt::Long' => '2.45',  # 2.36 is required for options we need, but at least 2.45 for bugfixes
@@ -36,4 +42,8 @@ WriteMakefile(
     EXE_FILES => [
         'bin/toot',
     ],
+
+    test => {
+        TESTS => 't/*.t',
+    },
 );
