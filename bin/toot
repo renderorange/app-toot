@@ -26,10 +26,11 @@ if ( $opt->{'help'} ) {
 
 if ( !defined $opt->{'status'} ) {
     foreach my $line ( <STDIN> ) {
-        chomp( $line );
         $opt->{'status'} .= $line;
     }
 }
+
+chomp( $opt->{'status'} );
 
 if ( !defined $opt->{'status'} ) {
     Pod::Usage::pod2usage( -msg => 'Option status is required', -exitval => 1, -verbose => 1 );
