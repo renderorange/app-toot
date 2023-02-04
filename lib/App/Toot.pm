@@ -21,7 +21,7 @@ sub new {
     }
 
     my $self = {
-        config => App::Toot::Config::load( $arg->{'config'} ),
+        config => App::Toot::Config->load( $arg->{'config'} ),
         status => $arg->{'status'},
     };
 

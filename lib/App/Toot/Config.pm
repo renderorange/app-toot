@@ -8,6 +8,7 @@ use Config::Tiny;
 our $VERSION = '0.01';
 
 sub load {
+    my $class   = shift;
     my $section = shift;
 
     if ( !defined $section ) {
@@ -77,7 +78,7 @@ App::Toot::Config - load and verify the config
 =head1 SYNOPSIS
 
  use App::Toot::Config;
- my $config = App::Toot::Config::load( 'section name' );
+ my $config = App::Toot::Config->load( 'section name' );
 
 =head1 DESCRIPTION
 
