@@ -65,6 +65,11 @@ C<App::Toot> is a program to post statues to Mastodon.
 
 For the commandline tool, see the documentation for L<toot> or C<man toot>.
 
+=head1 INSTALLATION
+
+ perl Makefile.PL
+ make && make test && make install
+
 =head1 METHODS
 
 =head2 new

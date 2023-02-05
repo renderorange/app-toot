@@ -17,6 +17,11 @@ App::Toot - post a status to Mastodon
 
 For the commandline tool, please see the documentation for [toot](https://metacpan.org/pod/toot) or `man toot`.
 
+# INSTALLATION
+
+    perl Makefile.PL
+    make && make test && make install
+
 # CONFIGURATION
 
 To post to Mastodon, you need to provide the account's oauth credentials in the file `config.ini`.
