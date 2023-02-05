@@ -28,7 +28,9 @@ WriteMakefile(
         'File::Find' => 0,
         'File::Spec' => 0,
         'FindBin' => 0,
+        'Test::Exception' => '0.42',  # recommended by Test2
         'Test::More' => '0.98',  # for subtest()
+        'Test::Warnings' => 0,
     },
     PREREQ_PM => {
         'Config::Tiny' => 0,
