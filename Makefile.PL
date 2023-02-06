@@ -9,6 +9,9 @@ WriteMakefile(
     META_MERGE => {
         'meta-spec' => { version => 2 },
         resources => {
+            bugtracker => {
+                web => 'https://github.com/renderorange/app-toot/issues',
+            },
             repository => {
                 type => 'git',
                 url => 'https://github.com/renderorange/app-toot.git',
