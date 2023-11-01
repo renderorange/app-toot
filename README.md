@@ -5,7 +5,7 @@ App::Toot - post a status to Mastodon
 # SYNOPSIS
 
     use App::Toot;
-    my $app = App::Toot->new({ config => 'default', status => 'toot all day' });
+    my $app = App::Toot->new({ config => 'name', status => 'status to post' });
     my $ret = $app->run();
 
     # the commandline tool
@@ -86,6 +86,13 @@ Multiple accounts can be configured with different sections after the `default` 
     access_token = D873_SKILLNOTAREALACCESSTOKEN
 
 The section name, `development` in the example above, can be named anything as long as it's unique with the other section names.
+
+To post to the other account, define the `config` value for that account.
+
+    # within code
+    my $app = App::Toot->new({ config => 'development', status => 'status to post' });
+    # the commandline tool
+    toot [--config <development>] [--status <status to post>] [--help]
 
 # COPYRIGHT AND LICENSE
 
