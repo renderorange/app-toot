@@ -16,7 +16,7 @@ my $opt = {
 Getopt::Long::GetOptions(
     $opt,
     'config=s',
-    'status=s',
+    'status:s',
     'help',
 ) or Pod::Usage::pod2usage( -exitval => 1 );
 
