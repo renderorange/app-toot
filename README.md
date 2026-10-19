@@ -35,6 +35,8 @@ To set up the configuration file, copy `config.ini.example` into one of the foll
 
 After creating the file, edit and update the values in the `default` section to match the account's oauth credentials.
 
+The `default` section is the section loaded when no other section is requested, but it is not required to exist.  Any section name can be used.
+
     [default]
     instance = mastodon.social
     username = youruser
@@ -46,7 +48,7 @@ After creating the file, edit and update the values in the `default` section to 
 
 ## Required keys
 
-The following keys are required for each section:
+The following keys are required for the section being loaded:
 
 - instance
 
@@ -70,7 +72,7 @@ The following keys are required for each section:
 
 ## Additional accounts
 
-Multiple accounts can be configured with different sections after the `default` section.
+Multiple accounts can be configured with different sections in any order.  The `default` section is not required.
 
     [default]
     instance = mastodon.social
@@ -85,7 +87,7 @@ Multiple accounts can be configured with different sections after the `default` 
     client_secret = u7hhd_STILLNOTAREALCLIENTSECRET
     access_token = D873_SKILLNOTAREALACCESSTOKEN
 
-The section name, `development` in the example above, can be named anything as long as it's unique with the other section names.
+The section name, `development` in the example above, can be named anything as long as it's unique with the other section names.  A section only needs the required keys when it is loaded.
 
 To post to the other account, define the `config` value for that account.
 
